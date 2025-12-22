@@ -2,9 +2,9 @@
  * 获取工资单数据
  * @returns {Promise<{userName: string, records: Array<{date: string, amount: number}>}>}
  */
-export const fetchWages = async () => {
+export const fetchWages = async (userName) => {
   try {
-    const response = await fetch('/api/wages');
+    const response = await fetch(`http://192.168.4.88:9999/api/worker_salary/query_salarys?userName=${encodeURIComponent(userName)}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -22,22 +22,22 @@ export const fetchWages = async () => {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve({
-          userName: "张三",
+          userName: userName,
           records: [
-            { date: "2023-10-01", amount: 300 },
-            { date: "2023-10-02", amount: 320 },
-            { date: "2023-10-05", amount: 300 },
-            { date: "2023-10-15", amount: 450 },
-            { date: "2023-11-01", amount: 300 },
-            { date: "2023-11-02", amount: 280 },
-            { date: "2023-11-03", amount: 300 },
-            { date: "2023-11-10", amount: 500 },
-            { date: "2023-11-20", amount: 300 },
-            { date: "2023-12-01", amount: 350 },
-            { date: "2023-12-05", amount: 350 },
-            { date: "2023-12-12", amount: 600 },
-            { date: "2023-12-13", amount: 600 },
-            { date: "2023-12-25", amount: 800 },
+            { date: "2023-10-01", wage: 300 },
+            { date: "2023-10-02", wage: 320 },
+            { date: "2023-10-05", wage: 300 },
+            { date: "2023-10-15", wage: 450 },
+            { date: "2023-11-01", wage: 300 },
+            { date: "2023-11-02", wage: 280 },
+            { date: "2023-11-03", wage: 300 },
+            { date: "2023-11-10", wage: 500 },
+            { date: "2023-11-20", wage: 300 },
+            { date: "2023-12-01", wage: 350 },
+            { date: "2023-12-05", wage: 350 },
+            { date: "2023-12-12", wage: 600 },
+            { date: "2023-12-13", wage: 600 },
+            { date: "2023-12-25", wage: 800 },
           ]
         });
       }, 500);

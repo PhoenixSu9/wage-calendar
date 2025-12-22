@@ -13,15 +13,30 @@ const formatDateKey = (year, month, day) => {
   return `${year}-${m}-${d}`;
 };
 
+// 读取指定 cookie 值的工具函数
+const getCookie = (key) => {
+  const match = document.cookie.match(new RegExp(`(?:^|; )${key}=([^;]*)`));
+  return match ? decodeURIComponent(match[1]) : null;
+};
+
 // --- 3. 组件部分 ---
 function App() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState({ userName: '', records: [] });
   // 默认查看2023年12月
-  const [currentDate, setCurrentDate] = useState(new Date(2023, 11, 1)); 
+  const [currentDate, setCurrentDate] = useState(new Date(2025, 11, 1)); 
 
   useEffect(() => {
-    fetchWages().then((data) => {
+    const userName = getCookie('name'); 
+
+    if (!userName) {
+      console.error('Missing required userName in cookie: name');
+      setLoading(false);
+      setData(prev => ({ ...prev, userName: '' }));
+      return;
+    }
+
+    fetchWages(userName).then((data) => {
       setData(data);
       setLoading(false);
     }).catch((error) => {
@@ -41,10 +56,11 @@ function App() {
     let total = 0;
     
     data.records.forEach(item => {
-      wageMap[item.date] = item.amount;
+      const wage = item.wage == null ? 0 : Number(item.wage) || 0;
+      wageMap[item.date] = wage;
       const [rYear, rMonth] = item.date.split('-').map(Number);
       if (rYear === year && rMonth === month + 1) {
-        total += item.amount;
+        total += wage;
       }
     });
 
@@ -55,7 +71,7 @@ function App() {
       return {
         day,
         dateKey,
-        amount: wageMap[dateKey] || 0
+        wage: wageMap[dateKey] || 0
       };
     });
 
@@ -99,12 +115,12 @@ function App() {
           {daysArray.map((item, index) => {
             if (!item) return <div key={`blank-${index}`} style={styles.dayCellEmpty} />;
             
-            const hasWage = item.amount > 0;
+            const hasWage = item.wage > 0;
             return (
               <div key={item.day} style={styles.dayCell}>
                 <span style={styles.dayNumber}>{item.day}</span>
                 {hasWage ? (
-                  <span style={styles.wageAmount}>+{item.amount}</span>
+                  <span style={styles.wageAmount}>+{item.wage}</span>
                 ) : (
                   <span style={styles.noWage}>-</span>
                 )}
