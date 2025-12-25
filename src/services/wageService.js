@@ -4,7 +4,7 @@
  */
 export const fetchWages = async (userName) => {
   try {
-    const response = await fetch(`http://192.168.4.88:9999/api/worker_salary/query_salarys?userName=${encodeURIComponent(userName)}`);
+    const response = await fetch(`http://192.168.1.14:7777/api/worker_salary/query_salarys?userName=${encodeURIComponent(userName)}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

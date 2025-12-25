@@ -19,6 +19,12 @@ const getCookie = (key) => {
   return match ? decodeURIComponent(match[1]) : null;
 };
 
+const getQueryParam = (key) => {
+  const params = new URLSearchParams(window.location.search);
+  const v = params.get(key);
+  return v ? decodeURIComponent(v) : null;
+};
+
 // --- 3. 组件部分 ---
 function App() {
   const [loading, setLoading] = useState(true);
@@ -27,10 +33,10 @@ function App() {
   const [currentDate, setCurrentDate] = useState(new Date(2025, 11, 1)); 
 
   useEffect(() => {
-    const userName = getCookie('name'); 
+    const userName = getQueryParam('name'); // 改为从 URL 获取
 
     if (!userName) {
-      console.error('Missing required userName in cookie: name');
+      console.error('Missing required userName in URL query: name');
       setLoading(false);
       setData(prev => ({ ...prev, userName: '' }));
       return;
