@@ -4,31 +4,31 @@
  */
 export const fetchWages = async (userName) => {
 
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        userName: userName,
-        records: [
-          { date: "2025-10-01", wage: 300, shift: "morning" },
-          { date: "2025-10-02", wage: 320, shift: "morning" },
-          { date: "2025-10-05", wage: 300, shift: "morning" },
-          { date: "2025-10-15", wage: 450, shift: "morning" },
-          { date: "2025-11-01", wage: 300, shift: "morning" },
-          { date: "2025-11-02", wage: 280, shift: "morning" },
-          { date: "2025-11-03", wage: 300, shift: "morning" },
-          { date: "2025-11-10", wage: 500, shift: "morning" },
-          { date: "2025-11-20", wage: 300, shift: "morning" },
-          { date: "2025-12-01", wage: 350, shift: "morning" },
-          { date: "2025-12-05", wage: 350, shift: "morning" },
-          { date: "2025-12-12", wage: 600, shift: "morning" },
-          { date: "2025-12-13", wage: 600, shift: "morning" },
-          { date: "2025-12-25", wage: 800, shift: "morning" },
-        ]
-      });
-    }, 500);
-  });
+  // return new Promise((resolve) => {
+  //   setTimeout(() => {
+  //     resolve({
+  //       userName: userName,
+  //       records: [
+  //         { date: "2025-10-01", wage: 300, shift: "morning" },
+  //         { date: "2025-10-02", wage: 320, shift: "morning" },
+  //         { date: "2025-10-05", wage: 300, shift: "morning" },
+  //         { date: "2025-10-15", wage: 450, shift: "morning" },
+  //         { date: "2025-11-01", wage: 300, shift: "morning" },
+  //         { date: "2025-11-02", wage: 280, shift: "morning" },
+  //         { date: "2025-11-03", wage: 300, shift: "morning" },
+  //         { date: "2025-11-10", wage: 500, shift: "morning" },
+  //         { date: "2025-11-20", wage: 300, shift: "morning" },
+  //         { date: "2025-12-01", wage: 350, shift: "morning" },
+  //         { date: "2025-12-05", wage: 350, shift: "morning" },
+  //         { date: "2025-12-12", wage: 600, shift: "morning" },
+  //         { date: "2025-12-13", wage: 600, shift: "morning" },
+  //         { date: "2025-12-25", wage: 800, shift: "morning" },
+  //       ]
+  //     });
+  //   }, 500);
+  // });
   try {
-    const response = await fetch(`http://115.236.44.18:7777/api/worker_salary/query_salarys?userName=${encodeURIComponent(userName)}`);
+    const response = await fetch(`http://192.168.1.14:7777/api/worker_salary/query_salarys?userName=${encodeURIComponent(userName)}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

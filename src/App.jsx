@@ -66,7 +66,7 @@ function App() {
     data.records.forEach(item => {
       const wage = item.wage == null ? 0 : Number(item.wage) || 0;
       wageMap[item.date] = wage;
-      shiftMap[item.date] = item.shift ?? ''; // 保存班次（可能为早班/晚班/中班等）
+      shiftMap[item.date] = item.shift_type ?? ''; // 保存班次（可能为早班/晚班/中班等）
       const [rYear, rMonth] = item.date.split('-').map(Number);
       if (rYear === year && rMonth === month + 1) {
         total += wage;
@@ -131,7 +131,7 @@ function App() {
                 <div style={styles.dayCellContent}>
                   <span style={styles.dayNumber}>{item.day}</span>
                   {/* 新增：显示班次 */}
-                  {/* <span style={styles.shiftText}>{item.shift || '-'}</span> */}
+                  <span style={styles.shiftText}>{item.shift || '-'}</span>
                   {hasWage ? (
                     <span style={styles.wageAmount}>+{item.wage}</span>
                   ) : (
