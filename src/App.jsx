@@ -34,6 +34,7 @@ function App() {
 
   useEffect(() => {
     const userName = getQueryParam('name'); // 改为从 URL 获取
+    
 
     if (!userName) {
       console.error('Missing required userName in URL query: name');
@@ -59,11 +60,13 @@ function App() {
     const firstDay = getFirstDayOfMonth(year, month);
     
     const wageMap = {}; 
+    const shiftMap = {}; // 新增：记录班次
     let total = 0;
     
     data.records.forEach(item => {
       const wage = item.wage == null ? 0 : Number(item.wage) || 0;
       wageMap[item.date] = wage;
+      shiftMap[item.date] = item.shift ?? ''; // 保存班次（可能为早班/晚班/中班等）
       const [rYear, rMonth] = item.date.split('-').map(Number);
       if (rYear === year && rMonth === month + 1) {
         total += wage;
@@ -77,7 +80,8 @@ function App() {
       return {
         day,
         dateKey,
-        wage: wageMap[dateKey] || 0
+        wage: wageMap[dateKey] || 0,
+        shift: shiftMap[dateKey] || '' // 带上班次
       };
     });
 
@@ -126,6 +130,8 @@ function App() {
               <div key={item.day} style={styles.dayCell}>
                 <div style={styles.dayCellContent}>
                   <span style={styles.dayNumber}>{item.day}</span>
+                  {/* 新增：显示班次 */}
+                  {/* <span style={styles.shiftText}>{item.shift || '-'}</span> */}
                   {hasWage ? (
                     <span style={styles.wageAmount}>+{item.wage}</span>
                   ) : (
@@ -144,8 +150,9 @@ function App() {
 // --- 4. 样式 ---
 const styles = {
   container: {
-    maxWidth: '480px',
-    margin: '0 auto',
+    width: '100%',
+    maxWidth: '100%', // 手机端占满宽度
+    margin: 0,
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
     backgroundColor: '#f5f7fa',
     minHeight: '100vh',
@@ -218,7 +225,9 @@ const styles = {
   },
   dayNumber: { fontSize: '14px', color: '#374151', fontWeight: '500', marginBottom: '2px' },
   wageAmount: { fontSize: '12px', color: '#10b981', fontWeight: '600' },
-  noWage: { fontSize: '12px', color: '#d1d5db' }
+  noWage: { fontSize: '12px', color: '#d1d5db' },
+  // 新增：班次样式
+  shiftText: { fontSize: '12px', color: '#6b7280', marginBottom: '2px' }
 };
 
 export default App;
