@@ -124,12 +124,14 @@ function App() {
             const hasWage = item.wage > 0;
             return (
               <div key={item.day} style={styles.dayCell}>
-                <span style={styles.dayNumber}>{item.day}</span>
-                {hasWage ? (
-                  <span style={styles.wageAmount}>+{item.wage}</span>
-                ) : (
-                  <span style={styles.noWage}>-</span>
-                )}
+                <div style={styles.dayCellContent}>
+                  <span style={styles.dayNumber}>{item.day}</span>
+                  {hasWage ? (
+                    <span style={styles.wageAmount}>+{item.wage}</span>
+                  ) : (
+                    <span style={styles.noWage}>-</span>
+                  )}
+                </div>
               </div>
             );
           })}
@@ -175,15 +177,45 @@ const styles = {
     backgroundColor: 'white', borderRadius: '16px', padding: '16px',
     boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
   },
-  weekRow: { display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', marginBottom: '8px' },
-  weekCell: { textAlign: 'center', fontSize: '14px', color: '#9ca3af', paddingBottom: '8px' },
+  weekRow: { 
+    display: 'grid', 
+    gridTemplateColumns: 'repeat(7, 1fr)', 
+    gap: '8px',  // 与 daysGrid 保持一致
+    marginBottom: '8px' 
+  },
+  weekCell: { 
+    textAlign: 'center', 
+    fontSize: '14px', 
+    color: '#9ca3af', 
+    paddingBottom: '8px',
+    boxSizing: 'border-box',
+  },
   daysGrid: { display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '8px' },
   dayCell: {
-    aspectRatio: '1', display: 'flex', flexDirection: 'column',
-    alignItems: 'center', justifyContent: 'center', backgroundColor: '#f9fafb',
-    borderRadius: '8px', border: '1px solid #f3f4f6',
+    // 使用 padding-bottom 替代 aspectRatio 以兼容 iOS
+    position: 'relative',
+    width: '100%',
+    paddingBottom: '100%', // 创建 1:1 的正方形
+    backgroundColor: '#f9fafb',
+    borderRadius: '8px', 
+    border: '1px solid #f3f4f6',
+    boxSizing: 'border-box',
   },
-  dayCellEmpty: { aspectRatio: '1' },
+  dayCellContent: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  dayCellEmpty: { 
+    width: '100%',
+    paddingBottom: '100%', // 与 dayCell 保持一致的比例
+  },
   dayNumber: { fontSize: '14px', color: '#374151', fontWeight: '500', marginBottom: '2px' },
   wageAmount: { fontSize: '12px', color: '#10b981', fontWeight: '600' },
   noWage: { fontSize: '12px', color: '#d1d5db' }
