@@ -218,16 +218,44 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    gap: '1px', // 统一控制行间距，非常紧凑
+    padding: '4px 2px', // 添加内边距防止内容贴边
   },
   dayCellEmpty: { 
     width: '100%',
     paddingBottom: '100%', // 与 dayCell 保持一致的比例
   },
-  dayNumber: { fontSize: '14px', color: '#374151', fontWeight: '500', marginBottom: '2px' },
-  wageAmount: { fontSize: '12px', color: '#10b981', fontWeight: '600' },
-  noWage: { fontSize: '12px', color: '#d1d5db' },
+  dayNumber: { 
+    fontSize: '14px', 
+    color: '#374151', 
+    fontWeight: '500', 
+    lineHeight: '1.2', // 减小行高
+    margin: 0, // 移除所有 margin
+    padding: 0,
+  },
+  wageAmount: { 
+    fontSize: '12px', 
+    color: '#10b981', 
+    fontWeight: '600',
+    lineHeight: '1.2', // 减小行高
+    margin: 0,
+    padding: 0,
+  },
+  noWage: { 
+    fontSize: '12px', 
+    color: '#d1d5db',
+    lineHeight: '1.2', // 减小行高
+    margin: 0,
+    padding: 0,
+  },
   // 新增：班次样式
-  shiftText: { fontSize: '12px', color: '#6b7280', marginBottom: '2px' }
+  shiftText: { 
+    fontSize: '12px', 
+    color: '#6b7280', 
+    lineHeight: '1.2', // 减小行高
+    margin: 0, // 移除所有 margin
+    padding: 0,
+  }
 };
 
 export default App;
